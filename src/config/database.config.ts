@@ -17,5 +17,8 @@ export const getDatabaseConfig = (): TypeOrmModuleOptions => {
         logging: false,
         migrations: [`${__dirname}/../database/migrations/*{.ts,.js}`],
         migrationsTableName: 'migrations',
+        ssl: {
+            rejectUnauthorized: false // This line will fix new error
+        }
     }
 };
