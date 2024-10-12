@@ -16,6 +16,10 @@ const configValidation = () => {
             CORS_ORIGIN: Joi.string().required(),
             JWT_SECRET: Joi.string().required(),
             DB_SYNCHRONIZE: Joi.string().valid('on', 'off').required(),
+            AWS_ACCESS_KEY_ID: Joi.string().required(),
+            AWS_SECRET_ACCESS_KEY: Joi.string().required(),
+            AWS_REGION: Joi.string().required(),
+            AWS_S3_BUCKET: Joi.string().required(),
         })
         .unknown();
 
@@ -42,4 +46,10 @@ export default {
         JWT: config.JWT_SECRET,
     },
     CORS_ORIGIN: config.CORS_ORIGIN,
+    AWS: {
+        S3_BUCKET: config.AWS_S3_BUCKET,
+        REGION: config.AWS_REGION,
+        ACCESS_KEY_ID: config.AWS_ACCESS_KEY_ID,
+        SECRET_ACCESS_KEY: config.AWS_SECRET_ACCESS_KEY
+    }
 }

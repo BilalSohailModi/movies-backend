@@ -1,12 +1,13 @@
 import { PartialType } from "@nestjs/mapped-types"
 import { IsNotEmpty, } from "class-validator"
 import { UserEntity } from "src/modules/user/entities/user.entity"
+import Multer from 'multer';
 
 export interface iMovie {
     id: string
     title: string
     publishingYear: number
-    poster: string
+    poster: Multer.File
     createdBy: UserEntity
     deletedAt: Date
     createdAt: Date
@@ -20,8 +21,8 @@ export class CreateMovieDto implements Partial<iMovie> {
     @IsNotEmpty()
     publishingYear: number
 
-    @IsNotEmpty()
     poster: string
+
 }
 
 
