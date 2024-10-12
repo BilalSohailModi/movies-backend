@@ -35,7 +35,14 @@ export class MovieController {
 
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
+  @UseInterceptors(FileInterceptor('poster'))
+  async update(@UploadedFile() file: Multer.File, @Param('id') id: string, @Body() updateMovieDto: UpdateMovieDto) {
+
+    if (file) {
+      const poster = await this.s3Service.uploadImage(file);
+      updateMovieDto.poster = poster.Location
+    }
+
     const response = await this.movieService.update(id, updateMovieDto);
     return { message: "Updated succesfully", response }
   }
