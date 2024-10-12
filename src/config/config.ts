@@ -6,7 +6,7 @@ dotenvConfig();
 const configValidation = () => {
     const envVarsSchema = Joi.object()
         .keys({
-            NODE_ENV: Joi.string().valid(ENVIRONMENTS.PRODUCTION, ENVIRONMENTS.DEVELOPMENT, 'test').required(),
+            NODE_ENV: Joi.string().valid(ENVIRONMENTS.PRODUCTION, ENVIRONMENTS.DEVELOPMENT, ENVIRONMENTS.LOCAL, 'test').required(),
             DB_HOST: Joi.string().required(),
             DB_PORT: Joi.number().default(3000),
             DB_USERNAME: Joi.string().required(),

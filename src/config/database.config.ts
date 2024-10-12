@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import config from './config';
+import { ENVIRONMENTS } from './app.constants';
 
 
 export const getDatabaseConfig = (): TypeOrmModuleOptions => {
@@ -17,7 +18,7 @@ export const getDatabaseConfig = (): TypeOrmModuleOptions => {
         logging: false,
         migrations: [`${__dirname}/../database/migrations/*{.ts,.js}`],
         migrationsTableName: 'migrations',
-        ssl: {
+        ssl: config.NODE_ENV == ENVIRONMENTS.LOCAL ? false : {
             rejectUnauthorized: false // This line will fix new error
         }
     }
