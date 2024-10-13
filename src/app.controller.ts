@@ -5,10 +5,15 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Get(`/:id/:name/test`)
-  getHello(@Param() param: any): string {
-    console.log(param)
+  @Get(`/`)
+  getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get(`/health`)
+  getHealth(): string {
+    return 'Healthy'
+  }
+
 
 }

@@ -1,0 +1,23 @@
+# Ignore node_modules in local context
+node_modules
+
+# Ignore log files
+*.log
+
+# Don't ignore necessary config and source files
+!nest-cli.json
+!tsconfig.json
+!package*.json
+!src/
+!dist/
+
+# Ignore Docker-related files
+.dockerignore
+Dockerfile
+
+# Ignore version control folders
+.git
+
+# Ignore build artifacts
+dist
+coverage
