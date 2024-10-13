@@ -23,7 +23,8 @@
     "migration:generate": "npm run typeorm -- -d ./migration.config.ts migration:generate ./src/database/migrations/$npm_config_name",
     "migration:create": "npm run typeorm -- migration:create ./migrations/$npm_config_name",
     "migration:revert": "npm run typeorm -- -d ./src/database/migration.config.ts migration:revert",
-    "migration:show": "npm run typeorm -- migration:show -d ./migration.config.ts"
+    "migration:show": "npm run typeorm -- migration:show -d ./migration.config.ts",
+    "push:ecr": "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 799020879252.dkr.ecr.us-east-1.amazonaws.com && docker build -t movie-backend . && docker tag movie-backend:latest 799020879252.dkr.ecr.us-east-1.amazonaws.com/movie-backend:latest && docker push 799020879252.dkr.ecr.us-east-1.amazonaws.com/movie-backend:latest"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
