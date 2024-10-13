@@ -42,6 +42,12 @@ export class MovieService {
       total,
     });
   }
+  async findById(id: string) {
+    const result = await this.movieRepository.findOne({ where: { id } });
+    if (!result)
+      throw new CustomHttpException('Movie not Found', HttpStatus.NOT_FOUND);
+    return result;
+  }
 
   async update(id: string, updateMovieDto: UpdateMovieDto) {
     const result = await this.movieRepository.update(id, updateMovieDto);
