@@ -28,7 +28,7 @@ export class MovieController {
   constructor(
     private readonly movieService: MovieService,
     private readonly s3Service: S3Service,
-  ) {}
+  ) { }
 
   @Post()
   @UseInterceptors(FileInterceptor('poster'))
@@ -49,8 +49,8 @@ export class MovieController {
   }
 
   @Get()
-  findAll(@Query() query: PagintionQuery) {
-    return this.movieService.findAll(query);
+  findAll(@Query() query: PagintionQuery, @Req() req: Request) {
+    return this.movieService.findAll(query, req.session.user);
   }
 
   @Get(':id')

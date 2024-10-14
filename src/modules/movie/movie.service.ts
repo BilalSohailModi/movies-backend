@@ -13,7 +13,7 @@ export class MovieService {
   constructor(
     @InjectRepository(MovieEntity)
     private movieRepository: Repository<MovieEntity>,
-  ) {}
+  ) { }
   async create(createMovieDto: CreateMovieDto, createdBy: UserEntity) {
     const movie = this.movieRepository.create({ ...createMovieDto, createdBy });
     await this.movieRepository.save(movie).catch((err) => {
@@ -22,10 +22,10 @@ export class MovieService {
     return movie;
   }
 
-  async findAll({ offset, limit, getAll }: iPagintionQuery) {
+  async findAll({ offset, limit, getAll }: iPagintionQuery, user: UserEntity) {
     const fetchAll = getAll == 'true';
     const options: FindManyOptions<MovieEntity> = {
-      where: { deletedAt: null },
+      where: { deletedAt: null, createdBy: { id: user.id } },
       order: { createdAt: 'DESC' }, // Use 'DESC' for descending order
       skip: offset,
       take: limit,
@@ -34,9 +34,9 @@ export class MovieService {
       delete options.skip;
       delete options.take;
     }
-    const [movie, total] = await this.movieRepository.findAndCount(options);
+    const [movies, total] = await this.movieRepository.findAndCount(options);
     return getPaginated({
-      data: movie,
+      data: movies,
       offset: fetchAll ? -1 : offset,
       limit: fetchAll ? -1 : limit,
       total,
