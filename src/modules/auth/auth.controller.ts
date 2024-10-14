@@ -26,16 +26,20 @@ export class AuthController {
   signJWT(user: iUser, rememberMe: boolean) {
     const access_token = this.authService.signJWT(user, rememberMe)
     return {
-      data: user,
+      data: this.omitPassword(user),
       access_token,
     }
+  }
+
+  omitPassword(user: iUser) {
+    return { ...user, password: undefined }
   }
 
   @UseGuards(JWTAuthGuard)
   @Get('/me')
   async getMe(@Req() req: Request) {
     if (req.session.user) return {
-      data: req.session.user,
+      data: this.omitPassword(req.session.user),
     }
   }
 }
