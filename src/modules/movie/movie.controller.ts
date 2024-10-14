@@ -22,7 +22,8 @@ import { UserEntity } from '../user/entities/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import Multer from 'multer';
 import { S3Service } from 'src/config/s3.config';
-@UseGuards(JWTAuthGuard)
+import { ThrottlerGuard } from '@nestjs/throttler';
+@UseGuards(ThrottlerGuard, JWTAuthGuard,)
 @Controller('movie')
 export class MovieController {
   constructor(

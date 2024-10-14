@@ -8,9 +8,18 @@ import { MovieModule } from './modules/movie/movie.module';
 import { UserModule } from './modules/user/user.module';
 import { LoggerModule } from 'nestjs-pino';
 import { getPinoConfig } from './config/logger.config';
+import { ThrottlerGuard, ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 60,
+        limit: 100,
+      }
+    ]),
     TypeOrmModule.forRoot(getDatabaseConfig()),
     LoggerModule.forRoot(getPinoConfig()),
     AuthModule,
@@ -19,6 +28,10 @@ import { getPinoConfig } from './config/logger.config';
   ],
 
   controllers: [AppController,],
-  providers: [AppService,],
+  providers: [AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },],
 })
 export class AppModule { }
