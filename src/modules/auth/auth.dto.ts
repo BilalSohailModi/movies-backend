@@ -7,6 +7,9 @@ export class signInValidation {
 
     @IsNotEmpty()
     password: string;
+
+    @IsNotEmpty()
+    rememberMe: boolean;
 }
 
 

@@ -22,9 +22,10 @@ export class AuthService {
         return user
     }
 
-    signJWT(user: iUser) {
+    signJWT(user: iUser, rememberMe: boolean) {
         const payload: iJWTpayload = { email: user.email, id: user.id, name: `${user.firstName} ${user.lastName}`, sub: user.id }
-        return this.jwtService.sign(payload)
+        const expiresIn = rememberMe ? '30d' : '1h'
+        return this.jwtService.sign(payload, { expiresIn })
     }
     async verifyJWT(jwt: string) {
         try {

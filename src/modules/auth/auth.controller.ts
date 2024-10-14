@@ -14,17 +14,17 @@ export class AuthController {
   @Post('/signin')
   async signIn(@Body() signinData: signInValidation,) {
     const user = await this.authService.signin(signinData)
-    return this.signJWT(user)
+    return this.signJWT(user, signinData.rememberMe)
   }
 
   @Post('/signup')
   async signUp(@Body() signUpData: SignUpUserDto,) {
     const user = await this.userService.signUp(signUpData)
-    return this.signJWT(user)
+    return this.signJWT(user, true)
   }
 
-  signJWT(user: iUser) {
-    const access_token = this.authService.signJWT(user)
+  signJWT(user: iUser, rememberMe: boolean) {
+    const access_token = this.authService.signJWT(user, rememberMe)
     return {
       data: user,
       access_token,
